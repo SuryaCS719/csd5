@@ -1,0 +1,44 @@
+#Encrypting and Decrypting a csv file in Python code:
+
+#installing cryptography pkg:
+pip install cryptography
+
+from cryptography.fernet import Fernet
+
+#Key Generation
+key = Fernet.generate_key()
+
+with open('mykey.key', 'wb') as mykey:
+    mykey.write(key)
+    
+with open('mykey.key', 'rb') as mykey:
+    key = mykey.read()
+
+print(key)
+
+#Encrytion
+f = Fernet(key)
+
+with open('grades.csv', 'rb') as original_file:
+    original = original_file.read()
+
+encrypted = f.encrypt(original)
+
+with open ('enc_grades.csv', 'wb') as encrypted_file:
+    encrypted_file.write(encrypted)
+
+#Decryption
+f = Fernet(key)
+
+with open('enc_grades.csv', 'rb') as encrypted_file:
+    encrypted = encrypted_file.read()
+
+decrypted = f.decrypt(encrypted)
+
+with open('dec_grades.csv', 'wb') as decrypted_file:
+    decrypted_file.write(decrypted)
+
+if (original==decrypted):
+  print("File is not corrupted")
+else:
+  print("File is corrupted")
