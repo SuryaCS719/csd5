@@ -1,0 +1,71 @@
+#Book class program code:-
+
+class Book:
+    def __init__(self,book_id,book_name,books_available,book_author):
+        self.id=book_id
+        self.name=book_name
+        self.author=book_author
+        self.available=books_available
+
+    def print_details(self):
+        print("Book ID is",self.id,"Book Author is",self.author,"Book Name is",self.name,"Book Availability",self.available)
+
+def sort_books(a):
+    d={}
+    for i in a:
+        if i.available not in d:
+            d[i.available]=[i]
+        else:
+            d[i.available]+=[i]
+    l=d.keys()
+    l=list(l)
+    l.sort()
+    ob_list=[]
+    for i in l:
+        ob_list+=d[i]
+    return ob_list
+
+def printing_in_order(d):
+    for i in d:
+        i.print_details()
+    return
+
+
+class Search:
+
+    def search_all(self,l,i_d,n,a):
+        for i in l:
+            if i_d=="":
+                i_d=-45
+            if i.id==int(i_d) or i.name==n or i.author==a:
+                return i
+        return False
+
+
+b1=Book(1,"Book1",10,"Author1")
+b2=Book(2,"Book2",25,"Author2")
+b3=Book(3,"Book3",12,"Author3")
+b4=Book(4,"Book4",45,"Author4")
+b5=Book(5,"Book5",7,"Author5")
+a=[b1,b2,b3,b4,b5]
+o=sort_books(a)
+printing_in_order(o)
+option=1
+while option:
+    print("Enter Book_Id: ")
+    book_id=input()
+    print("Enter Book Name: ")
+    book_name=input()
+    print("Enter Author Name: ")
+    book_author=input()
+    #print(book_id=="")
+    print(book_id,book_author,book_name)
+
+    if book_id=="" and book_name=='' and book_author=='':
+        break
+    sobj=Search()
+    b=sobj.search_all(a,book_id,book_name,book_author)
+    if b!=False:
+        b.print_details()
+    else:
+        print("No book is there with",book_id, book_name,book_author)
